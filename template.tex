@@ -1,0 +1,442 @@
+\documentclass[11pt,answers]{exam}
+\usepackage[utf8]{inputenc}
+\usepackage[mongolian]{babel}
+
+% Watermark
+\usepackage{draftwatermark}
+\SetWatermarkText{Ноорог}
+\SetWatermarkScale{5}
+\SetWatermarkAngle{60}
+
+% Dummy text
+\usepackage{lipsum}
+
+% ISBN
+
+\usepackage[ISBN=978-9919-23-463-8,SC0]{ean13isbn}
+\def\bookInfoDAA{ДАА-5.1}
+\def\bookInfoNNA{ННА--32.973-018}
+\def\bookInfoM{М-302}
+
+% Copyright Info
+
+\def\thetitle{Бодлогын хураамж}
+\def\thesubtitle{Жишээ, дасгал, бодлого, бодолт}
+\def\theauthor{Г.Махгал}
+\def\theurl{https://www.galaa.net/}
+\def\theurldesc{www.galaa.net}
+\def\copyrightyear{2023}
+
+\def\authors{\theauthor}
+\def\printed{2023}
+\def\copyrightyears{2023}
+\def\editor{Р.Редактор}
+\def\publisher{Хэвлэх үйлдвэр}
+\def\pp{20}
+
+% Foreword
+
+\newcommand{\foreword}{
+\lipsum[1-2]
+}
+
+% PACKAGES
+\usepackage{amsthm,amsmath,amssymb,multirow,ifthen,comment,tikz,pgfplots,listings,subcaption,centernot,colortbl,diagbox}
+\usepackage[fixed]{fontawesome5}
+\usepackage[inline]{enumitem}
+\usetikzlibrary{patterns,intersections}
+\usetikzlibrary{decorations.pathreplacing,calligraphy}
+\usetikzlibrary{angles,quotes}
+
+% QUESTION NUMBERING
+\renewcommand{\thequestion}{\bfseries\thesection.\arabic{question}}
+\usepackage{etoolbox}
+\patchcmd{\questions}{10.}{\thequestion.\ \ }{}{}% fix left margin
+
+% TASKS
+
+%\usepackage{enumitem}
+\newlist{tasks}{enumerate}{1}
+\setlist[tasks,1]{label=\roman*\,), leftmargin=*, itemsep=0.5\baselineskip, before=, font=, format=}
+\newcommand{\task}{\item}
+
+% ANSWERS
+
+\newbox\allanswers
+\setbox\allanswers=\vbox{}
+
+\newenvironment{answer}
+{%
+  \global\setbox\allanswers=\vbox\bgroup
+  \unvbox\allanswers
+  \list{}{\leftmargin0em}%
+  \item\relax
+  \hspace{-3.5em}\makebox[3em][r]{\thequestion.}\par\vspace{-\parskip}\vspace{-\baselineskip}
+}%
+{%
+  \endlist
+  \bigbreak
+  \egroup
+}
+
+\newcommand{\showallanswers}{
+  \clearpage
+  \section*{Бодолт}
+  \addcontentsline{toc}{section}{Бодолт}
+  \unvbox\allanswers
+}
+
+% Bonus
+\bonuspointpoints{оноо}{оноо}
+% USAGE
+% \bonusquestion[5]
+% \bonuspart[5]
+
+% Solution
+% DOES NOT USE
+%\unframedsolutions
+%\renewcommand{\solutiontitle}{\noindent\textit{Хариу}\par\noindent}
+
+% Table and Figure Numbering
+\usepackage{chngcntr}
+\counterwithin{table}{section}
+\counterwithin{figure}{section}
+
+% Color
+\definecolor{maincolor}{cmyk}{1,0,0,0.5}
+
+% Listing
+\lstset{
+  language=R,
+  basicstyle={\normalfont\ttfamily},
+  backgroundcolor=\color{black!10},
+  keywordstyle=\color{maincolor},
+  commentstyle=\color{black!85},
+  stringstyle=\color{black!85},
+  breakatwhitespace=true,
+  breaklines=true,
+  frame=l,
+  framesep=5pt,framerule=2pt,
+  xleftmargin=8pt,xrightmargin=0pt,
+  rulecolor=\color{maincolor!65},
+  keepspaces=true,
+  showstringspaces=false,
+  columns=flexible,
+  numbers=none,
+  tabsize=3,
+  inputencoding=utf8,
+  escapeinside={\#}{;},
+  morekeywords={in,replicate},
+  otherkeywords={set.seed,data.frame,which.max,chisq.test},
+  deletendkeywords={},
+  deletekeywords={R,t,q,lower,by,col,scale}
+}
+
+% Enumeration
+%\usepackage[inline]{enumitem}
+\setlist{nolistsep}
+\let\oldenumerate\enumerate
+\renewcommand{\enumerate}{
+  \oldenumerate
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}
+\renewcommand{\theenumi}{\arabic{enumi}}
+\renewcommand{\theenumii}{\alph{enumii}}
+\renewcommand{\theenumiii}{\roman{enumiii}}
+
+\usepackage[ampersand]{easylist}
+\ListProperties(Margin=3ex)
+
+% Example
+\newtheoremstyle{example}
+{}                % Space above
+{}                % Space below
+{\slshape}        % Theorem body font % (default is "\upshape")
+{-1.9em}                % Indent amount
+{\bfseries}       % Theorem head font % (default is \mdseries)
+{.\\[0.25\baselineskip]}               % Punctuation after theorem head % default: no punctuation
+{ }               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{example}
+\newtheorem{example}{\color{maincolor}\faIcon[solid]{chalkboard-teacher} Жишээ}[section]
+
+% url
+\usepackage[hyphens]{url}
+\usepackage[
+  colorlinks=true,urlcolor=maincolor,linkcolor=black,linktoc=all,
+  unicode=true,pagebackref=true
+]{hyperref}
+
+% Author and Title
+\hypersetup{
+  pdftex,
+  pdfauthor={\theauthor},
+  pdftitle={\thetitle},
+  pdfsubject={\thesubtitle},
+  pdfkeywords={},
+  pdfproducer={pdfLaTeX},
+  pdfcreator={LaTeX}
+}
+
+% Paper Size and Margin
+\usepackage{geometry}
+\geometry{
+ b5paper,
+ twoside,
+ inner=2.75cm,
+ outer=1.5cm,
+ top=2.35cm,
+ bottom=2.5cm,
+ }
+
+% contents to TOC
+\usepackage{tocbibind}
+
+% TOC
+\usepackage{tocloft}
+\renewcommand{\cftsecfont}{\normalfont}
+\renewcommand{\cftsecpagefont}{\normalfont}
+
+% Header and footer
+\renewcommand\headrule{}
+\lhead[\textcopyright\ \copyrightyear\ifthenelse{\equal{\the\year}{\copyrightyear}}{}{\,--\,\the\year} \theauthor]{\href{\theurl}{\textcolor{black}{\theurldesc}}}
+\rhead[\href{\theurl}{\textcolor{black}{\theurldesc}}]{\textcopyright\ \copyrightyear\ifthenelse{\equal{\the\year}{\copyrightyear}}{}{\,--\,\the\year} \theauthor}
+\cfoot[\thepage]{\thepage}
+
+% Positioning
+\usepackage[absolute,overlay]{textpos}
+\setlength{\TPHorizModule}{1cm}
+\setlength{\TPVertModule}{1cm}
+
+% Page break in math mode
+\allowdisplaybreaks
+
+% Table
+\renewcommand{\arraystretch}{1.5}
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+% Back Cover
+
+\newcommand{\backCover}{
+  \newpage
+  \thispagestyle{empty}
+  \newgeometry{left=3cm,right=3cm,bottom=3cm,top=3cm}
+  \parskip=0pt
+  \pagecolor{maincolor!75}
+  \begin{minipage}{\textwidth}
+  \color{white}
+  \setlength{\parindent}{1cm}
+  \setlength{\parskip}{0.5\baselineskip}
+  \large
+  \foreword
+  \end{minipage}
+  \vfill
+  \hfill\colorbox{white}{\EANisbn}
+}
+
+% DOCUMENT
+\begin{document}
+\pagenumbering{gobble}
+\thispagestyle{empty}
+\begin{titlepage}
+\newgeometry{left=0cm,right=0cm,bottom=0cm,top=0cm} %defines the geometry for the titlepage
+\pagecolor{maincolor!75}
+\color{white}
+% 
+\begin{textblock}{14}(5, 3.03)
+\makebox[0pt][l]{\rule{0.65\textwidth}{1pt}}
+\end{textblock}
+% author
+\begin{textblock}{14}(2, 2.35)
+\begin{tikzpicture}
+\node at (0.5,0.5) [rectangle, minimum width=3.5cm, minimum height=1.25cm,text centered, draw=maincolor!75, fill=maincolor!75] {\textbf{\textsf{\Large\color{white} Г.Махгал}}};
+\end{tikzpicture}
+\end{textblock}
+% Title
+\begin{textblock}{11}(2, 11)
+\scalebox{1.7}{
+\begin{minipage}{0.5\paperwidth}
+\LARGE \bfseries \thetitle
+\vskip5mm
+\begin{flushleft}
+\normalsize \thesubtitle
+\end{flushleft}
+\end{minipage}
+}
+\end{textblock}
+% copyright
+\begin{textblock}{6}(10, 22)
+\begin{flushright}
+\bfseries
+\textcopyright\ \copyrightyear\ifthenelse{\equal{\the\year}{\copyrightyear}}{}{\,--\,\the\year} \theauthor
+\hfill
+\textsf{\href{\theurl}{\textcolor{white}{\theurldesc}}}
+\end{flushright}
+\end{textblock}
+% 
+${}$
+\end{titlepage}
+\restoregeometry % restores the geometry
+\nopagecolor% Use this to restore the color pages to white
+\color{black}
+\pagenumbering{arabic}
+
+% Title Page
+
+\newpage
+\thispagestyle{empty}
+\begingroup
+\centering
+\vspace*{\baselineskip}
+{\Large \authors}\\[0.07\textheight]
+\begin{tikzpicture}[scale=1.5,rotate=135]
+ \draw [white,fill=maincolor] (0,0) -- (0,1) -- (1,1) -- (1,0) -- (0,0);
+ \draw [white,fill=white] (0.25,0) -- (0.25,0.8) -- (0.55,0.8) -- (0.55,1) -- (0.75,1) -- (0.75,0.6) -- (0.45,0.6) -- (0.45,0) -- (0.25,0);
+\end{tikzpicture}
+\\[0.06\textheight]
+{\LARGE\bfseries\sffamily \textcolor{maincolor}{ДАСГАЛ БОДЛОГЫН ХУРААМЖ}}\\[0.5\baselineskip]
+\makebox[0pt][c]{\textcolor{maincolor!50}{\rule{0.75\textwidth}{1pt}}}\\[2\baselineskip]
+{\Large \thesubtitle}\\[1.5\baselineskip]
+{\large Анхны хэвлэл}
+\par\vfill
+{\large Улаанбаатар\ \printed}\par
+\vspace*{3\baselineskip}
+\endgroup
+\clearpage
+
+% Copyright Page
+
+\newpage
+\thispagestyle{empty}
+\begingroup
+\noindent
+\bookInfoDAA \\
+\bookInfoNNA \\
+\bookInfoM
+\vfill
+\noindent
+Дасгал бодлогын хураамж
+\\[0.3\baselineskip]
+\thesubtitle
+\\[\baselineskip]
+Анхны хэвлэл
+\\[\baselineskip]
+Зохиогч \authors \\[0.3\baselineskip]
+Редактор\ \editor \\[0.3\baselineskip]
+Эх бэлдсэн Г.Махгал \\[\baselineskip]
+Харилцах хаяг \href{https://www.galaa.net/}{www.galaa.net}\\[\baselineskip]
+\copyright\;\copyrightyears\ \authors. Бүх эрх хамгаалагдсан. \\[0.3\baselineskip]
+Зохиогчийн зөвшөөрөлгүйгээр бодлогын хураамжийг хэсэгчлэн болон бүтнээр нь цаасан болон дижитал, бусад аливаа хэлбэрээр хуулбарлах, хувилан олшруулахыг хориглоно. \\[\baselineskip]
+\publisher\ хэвлэх үйлдвэрт хэвлэв. \\[0.3\baselineskip]
+Хэвлэлийн хуудас \pp. Цаасны хэмжээ B5. Эхийг \LaTeX\ програмаар бэлтгэв. \\[0.3\baselineskip]
+\ISBN
+\endgroup
+\clearpage
+
+% Preface
+
+\begin{center}
+\color{maincolor}
+\textbf{\LARGE Өмнөх үг}
+\rule{1\linewidth}{1pt}
+\end{center}
+\thispagestyle{empty}
+{
+\setlength{\parindent}{1cm}
+\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+\foreword
+}
+
+{
+\pagestyle{empty}
+\cleardoublepage
+}
+
+\tableofcontents
+
+{
+\pagestyle{empty}
+\cleardoublepage
+}
+
+\section{Section name}
+
+\begin{questions}
+
+\fullwidth{\subsection*{Subsection name}}
+
+\item[]
+
+\begin{example}
+\lipsum[1-3]
+\end{example}
+
+\fullwidth{\subsection*{Subsection name}}
+
+\lipsum[1]
+
+\question
+\lipsum[1]
+\begin{tasks}
+ \task \lipsum[2]
+ \task \lipsum[3]
+\end{tasks}
+
+\begin{answer}
+\begin{tasks}
+ \task \lipsum[2]
+ \task \lipsum[3]
+\end{tasks}
+\end{answer}
+
+\question
+\lipsum[4]
+
+\begin{answer}
+\lipsum[5]
+\end{answer}
+
+\end{questions}
+
+\section{Section name}
+
+\begin{questions}
+
+\fullwidth{\subsection*{Subsection name}}
+
+\item[]\vspace{-\baselineskip}
+
+\begin{example}
+\lipsum[1]
+\end{example}
+
+\question
+\lipsum[1]
+\begin{tasks}
+\task \lipsum[2]
+\task \lipsum[3]
+\end{tasks}
+
+\begin{answer}
+\begin{tasks}
+\task \lipsum[4]
+\task \lipsum[5]
+\end{tasks}
+\end{answer}
+
+\end{questions}
+
+\cleardoublepage
+
+\showallanswers
+
+\cleardoublepage
+
+\backCover
+
+\end{document}
